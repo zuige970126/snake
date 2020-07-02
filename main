@@ -1,0 +1,69 @@
+package main
+
+import (
+	"fmt"
+	"math/rand"
+	"os"
+	"os/exec"
+	"time"
+)
+type food struct {
+	X int	//食物的横坐标
+	Y int	//食物的纵坐标
+
+}
+type snake struct {
+	size [][]string
+}
+
+func main() {
+	snake:=Creatmap(16)
+	for i:=0;i<10;i++{
+		Creatfood(snake)
+		for i:=range snake{
+			for _,v:=range snake[i]{
+				fmt.Printf("%v ",v)
+			}
+			fmt.Println("")
+
+		}
+		cmd := exec.Command("cmd","/c","cls")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+
+
+
+		//control()
+		time.Sleep(20)
+	}
+
+
+}
+func Creatmap(size int)[][]string{
+	GameMap := make([][]string, size)
+	for i:=range GameMap{
+		GameMap[i]=make([]string,size)
+		for j,v:=range GameMap[i]{
+			GameMap[i][j]=" "
+			if i==0||i==15 {
+				GameMap[i][j]="—"
+			}
+			if j==0||j==15 {
+				GameMap[i][j]="|"
+			}
+
+			fmt.Printf("%v ",v)
+		}
+		fmt.Println("")
+
+	}
+	return GameMap
+}
+func Creatfood(snake [][]string){
+	var foods food
+	rand.Seed((time.Now().UnixNano()))
+	foods.X = rand.Intn(14)+1
+	rand.Seed((time.Now().UnixNano())+1)
+	foods.Y = rand.Intn(14)+1
+	snake[foods.X][foods.Y]="*"
+}
